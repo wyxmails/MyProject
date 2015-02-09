@@ -65,7 +65,7 @@ def generateRules(L, supportData, minConf=0.7):
 			if (i>1):
 				rulesFromConseq(freqSet, H1, supportData, bigRuleList, minConf)
 			else:
-				clacConf(freqSet, H1, supportData, bigRuleList, minConf)
+				calcConf(freqSet, H1, supportData, bigRuleList, minConf)
 	return bigRuleList
 def rulesFromConseq(freqSet, H, supportData, br1, minConf=0.7):
 	m = len(H[0])
