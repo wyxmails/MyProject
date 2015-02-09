@@ -1,3 +1,5 @@
+#use execfile( "someFile.py") under python interpreter
+
 import apriori
 
 dataSet = apriori.loadDataSet()
