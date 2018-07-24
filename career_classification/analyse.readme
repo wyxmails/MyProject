@@ -1,0 +1,24 @@
+0,  get the types of doctors from physicians.csv， cardiology_doctors=8274，
+    other_doctors=16660, unknown_doctors=11092
+    cardiology_cases:190095, other_cases:216616, unknown_cases:181063
+1,  extract data, generate train.data and predict.data, train_merge.data and predict_merge.data
+2,  Look at data, find out some regularity.
+    There are some cases the number_of_patients is more than 5000, think it as noise.
+    Some procedure_code occur more than 10000 times, one of them 93306 almost all are of cardiology physicians.
+    The distribution of number_of_patients on positive and negative are similar.
+    The cases of each doctor's distribution on positive and negative are different. The peek value of positive is bigger than negative.
+    First step consider just use procedure_code as feature, use logistic regression.
+3,  Merge procedure_code according to same physician_id,
+    train LogisticRegression model using only procedure_code as features,
+    split data to train:test=8:2=19887:5046
+        metrics result for train data: areaUnderPR=0.862672, areaUnderROC=0.863093
+        metrics result for test data: areaUnderPR=0.868281, areaUnderROC=0.866041
+    sample without replacement train:test=8:2=19965:5039
+        metrics result for train data: areaUnderPR=0.861339, areaUnderROC=0.862135
+        metrics result for test data: areaUnderPR=0.871752, areaUnderROC=0.867239
+    parameters:regParam=0.005, elasticNetParam=0.005,threshold=0.4
+        metrics result for train data: precision=0.905270, recall=0.809517
+        metrics result for test data: precision=0.913679, recall=0.821493
+4,  Predict Unknown physician_id, write result to direction ./predict_result.data
+5,  Split predict result to two part: cardiology and other, merge with features according physician_id
+    doctors have procedure_code 93306 are mainly predicted as cardiology, which matches previous analysis.

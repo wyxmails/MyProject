@@ -1,0 +1,17 @@
+
+###1_gen_train.py generates input for train and predict,
+###train_merge.data and predict_merge.data are used in 3_train.py
+###rain.data and predict.data, did not merge pcode according to physician_id, are used in 3_train_v0.py.
+python3 1_gen_train.py
+
+###3_train.py use LogisticRegression to train train_merge.data
+###save the model in "./lr" direction
+###use areaUnderPR, areaUnderROC, precision,recall to evaluate the model, and store the data in train.result
+spark-submit 3_train.py
+
+###4_predict.py use model from 3_train.py to predict data in predict_merge.data
+###write down the predict result in "./predict_result.data" direction
+spark-submit 4_predict.py
+
+###split predict result to two parts: predict.cardiology and predict.other
+python3 5_look_at_result.py
