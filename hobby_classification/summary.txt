@@ -1,0 +1,19 @@
+Summary:
+I tried to figure out the cat owner and dog owner from the comments. After collect these data, I train the data using a binary classification model and evaluate the model with two metrics. Then generalize the model to the whole users. With the metric result of the model, I can estimate how many users are dog/cat owners. Then I tried to learn some useful topics from the comments using cluster model. I set the parameter to 10, so it finally give out 10 topics. Also I find out the creator that has the most dog/cat owners in numbers and in statistically percentages. I listed the detail processing flow and improvements below.
+
+
+Project processing flow:
+1, Use 'my dog' and 'my cat' to identify cat and dog owners from the data.
+2, The data collected in step 1 will be used to train a model that can identify a user whether it is a dog owner or cat owner. Firstly I clean the data and transformed the comments into numeric vectors with Word2Vec. Then I split the data into two sets, train and test with proportion 7:3. I chose Decision Tree as the classify model. And use Binary Classification Evaluator to evaluate it. The metrics are areaUnderPR and areaUnderROC. Then I store the model in the file.
+3, Clean and transform the comments to numerics of all the data, and load the model stored in step 2, then classify all the data.
+4, Use tokenizer to token the words and then use vectorCounterizer to transform the comments to two dimensions vectors. With the first column represent the word_id and second column represent the occurance times of the word. Then use LDA to to cluster the comments, and get 10 topics of the data. The topics are translated from index to word. And printed out at last. But in this step I did not remove stop words from the comments, so the topic seems not very good. 
+5, First part I found one creator with the most cat and dog owners on numbers, so the creators are sorted according the number of owners it they have. Second part I calculate the dog owners and cat owners,then sort the creators according the log(dog_owners_num)*dog_owners_nums/total_owners_num and log(cat_owners_num)*cat_owners_num/total_owners_num. Finally get two creators that have highest statistically significant percentages of dog or cat owners.
+
+
+Something that needs improvement and consideration:
+1, Use more information to collect the dog and cat owners.
+2, Stopwords should be deleted, for example: 'the', 'a'
+3, Very high or very low frequent words should be deleted.
+4, Use frequent words not numeric vectors as features, sometimes it gets better result.
+5, It may be defined as a multi-classification problem, because some people have neither dogs nor cats. And also, there might be other pets, for example, pig.
+6, Look at the classification result, optimize the model or try other models to get a better result.
